@@ -1,0 +1,17 @@
+GO Project Manager
+
+Create multiple projects
+
+Projects contain:
+Tasks
+    Create, complete, delete
+    Status: NEW/TODO, complete, backlog
+    Priority: LOW, MED, HIGH
+
+Project info:
+    Name
+    Description
+    Tasks
+    Directory
+    Git repo/Status
+
