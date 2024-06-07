@@ -24,17 +24,20 @@ type Task struct {
 }
 
 func main() {
+	clear()
+
 	scanner := bufio.NewScanner(os.Stdin)
 	var input string
 
 	fmt.Println("GO Project Manager")
+	fmt.Printf("c: cancel current action\nq: quit\n")
+
 	view := "projects"
 	var selectedProject int
 	var projects []Project
 	projects = append(projects, demoProject())
 
 	for {
-		clear()
 
 		switch view {
 		case "projects":
@@ -46,13 +49,19 @@ func main() {
 			scanner.Scan()
 			input = scanner.Text()
 
-			projectNum, err := strconv.Atoi(input)
-			if err != nil {
-				fmt.Println("Error: ", err)
-				return
+			if input == "new" {
+				projects = append(projects, newProject())
+			} else {
+				projectNum, err := strconv.Atoi(input)
+				if err != nil {
+					fmt.Println("Error: ", err)
+					return
+				}
+				selectedProject = projectNum
+				view = "tasks"
+
 			}
-			selectedProject = projectNum
-			view = "tasks"
+
 		case "tasks":
 			fmt.Println(projects[selectedProject].Name)
 			fmt.Println(projects[selectedProject].Description)
@@ -110,6 +119,25 @@ func newTask() Task {
 	newTask.Status = "New"
 
 	return newTask
+}
+func newProject() Project {
+	scanner := bufio.NewScanner(os.Stdin)
+	var input string
+
+	var newProject Project
+
+	fmt.Print("Project Name: ")
+	scanner.Scan()
+	input = scanner.Text()
+	newProject.Name = input
+
+	fmt.Print("Description: ")
+	scanner.Scan()
+	input = scanner.Text()
+	newProject.Description = input
+
+	return newProject
+
 }
 
 func demoProject() Project {
